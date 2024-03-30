@@ -37,13 +37,22 @@ function Home() {
     setCurrentTime(0);
   }
 
+  function resumeStopWatch(){
+    startTime.current = Date.now();
+    let prevTime = currentTime;
+    // let timeElapsedDueToStop = startTime.current - currentTime;
+    intervalRef.current = setInterval(()=>{
+      setCurrentTime(Date.now() + prevTime )
+    },10)
+  }
+
   return (
     <div id="main">
       <section>
         <h1 className='seconds-elapsed'>{timeToDisplay }</h1>
         <section className='buttons'>
           <button className="start-btn" onClick={startStopWatch}>START</button>
-          <button className="stop-btn" onClick={stopStopWatch}>STOP</button>
+          <button className="stop-btn" onClick={stopStopWatch}>STOP</button>{/* conditional rendering to make the stop to resume */}
           <button className="lap-btn" onClick={addLap}>LAP</button>
           <button className="reset-btn" onClick={resetStopWatch}>RESET</button>
         </section>
@@ -55,7 +64,7 @@ function Home() {
             {
               laps.map((lap)=>{
                 return (
-                  <div>{lap}</div>
+                  <p key={lap}>{lap}</p>
                 )
               })
             }
